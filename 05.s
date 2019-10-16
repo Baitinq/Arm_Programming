@@ -15,7 +15,9 @@ and_dog DEFB    "and his dog, Spot",0
         ALIGN
 ;4 men went to mow\n
 start   MOV R1, #0
-main    ADR R0, verse
+        MOV R2, #4
+
+main    ADR R0, verse   ; change to R2
         SWI 3
         ADR R0, space
         SWI 3
@@ -28,28 +30,24 @@ main    ADR R0, verse
         SWI 3
 
 ;4 men, X men,
-        
-
-
-        ADR R0, mowdow
-        SWI 3
-
-        ADR R0, verse
-        SUBS R0, R0, R1 ; SUBS
+        ; R2 is the number from 4 to 1
+        ADR R0, R2
+        SUB R0, R0, R1
+        ; down to here it makes sense
+        CMP R0, #1 ;i need 2 counters
         ADD R1, R1, #1 ;increase the substract value
         SWI 4
         
-        BHI #0 print_plural
-        BEQ #0 singular
-
-        SWI 2  
-
-
-singular  
-
-
+        BEQ singlr
+        
         B main
 
-plural
+        ADR R0, mowdow
+        SWI 3
+        
+        CMP  ; we need to compare n of iterations
+        smaller than 3 
+        BLT main
 
-    B main
+
+        SWI 2  
